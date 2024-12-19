@@ -9,6 +9,12 @@ namespace ComplexityAnalyzer
     {
         public static string Detect(string codeSnippet)
         {
+            if (codeSnippet == null)
+            {
+                // Throw exception for null input as expected
+                throw new ArgumentNullException(nameof(codeSnippet), "Code snippet cannot be null.");
+            }
+
             if (string.IsNullOrWhiteSpace(codeSnippet))
             {
                 // Handle empty or whitespace input
@@ -39,16 +45,38 @@ namespace ComplexityAnalyzer
 
         private static bool IsDirectArrayAccess(string codeSnippet)
         {
-            // Match patterns that indicate array access without being an initialization
-            if (codeSnippet.Contains("[") && codeSnippet.Contains("]") && !codeSnippet.Contains("new"))
+            // Normalize the code snippet (remove line breaks, extra spaces)
+            string normalizedCode = codeSnippet.Replace("\n", "").Replace("\r", "").Trim();
+
+            // Match patterns that indicate array access
+            if (normalizedCode.Contains("[") && normalizedCode.Contains("]"))
             {
-                // Exclude cases where there is an assignment like "int[] array = ..."
-                if (codeSnippet.Contains("=") && !codeSnippet.Contains("?")) return false;
+                // Exclude array initializations like "int[] array = new int[10];"
+                if (normalizedCode.Contains("new")) return false;
+
+                // Check for array access inside conditionals or blocks
+                if (normalizedCode.Contains("if (") || normalizedCode.Contains("{") || normalizedCode.Contains("}"))
+                {
+                    string innerCode = ExtractInnerBlock(normalizedCode);
+                    return IsDirectArrayAccess(innerCode);
+                }
 
                 return true;
             }
 
             return false;
+        }
+
+        private static string ExtractInnerBlock(string codeSnippet)
+        {
+            // Extract the inner block of a conditional or nested structure
+            int openBraceIndex = codeSnippet.IndexOf("{");
+            int closeBraceIndex = codeSnippet.LastIndexOf("}");
+            if (openBraceIndex != -1 && closeBraceIndex != -1)
+            {
+                return codeSnippet.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1).Trim();
+            }
+            return codeSnippet;
         }
 
         private static bool IsConstantReturnStatement(string codeSnippet)
