@@ -48,5 +48,19 @@ namespace ComplexityAnalyzer
             // Check if the value is a valid character literal, e.g., 'a'
             return value.Length == 3 && value.StartsWith("'") && value.EndsWith("'");
         }
+
+        private static bool IsArrayAccess(string codeSnippet)
+        {
+            if (codeSnippet.Contains("[") && codeSnippet.Contains("]"))
+            {
+                if (codeSnippet.Contains("new") || codeSnippet.Contains("="))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
     }
 }
