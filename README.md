@@ -5,3 +5,5 @@ A tool for analyzing algorithmic complexity in .NET applications.
 - Installation instructions (via NuGet).
 - Usage examples (add placeholders for now).
 - Contribution guidelines.
+
+![NuGet](https://img.shields.io/nuget/v/ComplexityIQ)
