@@ -1,0 +1,10 @@
+<PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Philip Thomas</Authors>
+    <Company>CraftedWithIntent</Company>
+    <Description>A tool for detecting algorithmic complexity in .NET code.</Description>
+    <PackageProjectUrl>https://github.com/CraftedWithIntent/ComplexityIQ</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/CraftedWithIntent/ComplexityIQ</RepositoryUrl>
+    <PackageLicenseExpression>Apache</PackageLicenseExpression>
+</PropertyGroup>
