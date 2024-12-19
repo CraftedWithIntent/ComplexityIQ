@@ -28,7 +28,7 @@ namespace ComplexityAnalyzer
             }
 
             // Check for constant return statements
-            if (codeSnippet.StartsWith("return ") && !codeSnippet.Contains(";"))
+            if (codeSnippet.TrimStart().StartsWith("return ") && !codeSnippet.Contains(" ") && codeSnippet.TrimEnd().EndsWith(";"))
             {
                 return "O(1) - Constant Time Complexity Detected";
             }
