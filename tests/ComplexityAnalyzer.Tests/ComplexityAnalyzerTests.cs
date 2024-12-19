@@ -2,29 +2,39 @@
 // Copyright (c) CraftedWithIntent.  All rights reserved.
 // ------------------------------------------------------------
 
-using Xunit;
-
 namespace ComplexityAnalyzer.Tests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    
+    [TestClass]
     public class ComplexityAnalyzerTests
     {
-        [Fact]
+        [TestMethod]
         public void Detect_ShouldReturnO1_WhenCodeContainsDirectArrayAccess()
         {
+            // Arrange
             string code = "int value = array[5];";
+
+            // Act
             string result = ComplexityDetector.Detect(code);
 
-            Assert.Equal("O(1) - Constant Time Complexity Detected", result);
+            // Assert
+            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
         }
 
-        [Fact]
+        [TestMethod]
         public void Detect_ShouldReturnUndetermined_WhenCodeIsUnrecognized()
         {
+            // Arrange
             string code = "int sum = 0;";
+
+            // Act
             string result = ComplexityDetector.Detect(code);
 
-            Assert.Equal("Complexity Undetermined", result);
+            // Assert
+            Assert.AreEqual("Complexity Undetermined", result);
         }
     }
 }
+
 
