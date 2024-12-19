@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- Target Framework -->
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     
     <!-- Enable NuGet Package Creation -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
