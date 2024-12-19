@@ -1,10 +1,35 @@
-<PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Target Framework -->
     <TargetFramework>net6.0</TargetFramework>
+    
+    <!-- Enable NuGet Package Creation -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>ComplexityIQ</PackageId>
+    <Version>1.0.0</Version>
     <Authors>Philip Thomas</Authors>
     <Company>CraftedWithIntent</Company>
-    <Description>A tool for detecting algorithmic complexity in .NET code.</Description>
+    <Description>A tool for detecting algorithmic complexity in .NET applications.</Description>
     <PackageProjectUrl>https://github.com/CraftedWithIntent/ComplexityIQ</PackageProjectUrl>
     <RepositoryUrl>https://github.com/CraftedWithIntent/ComplexityIQ</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache</PackageLicenseExpression>
-</PropertyGroup>
+    <PackageTags>Complexity Analysis; Algorithms; Performance; Development Tools</PackageTags>
+    <Title>ComplexityIQ</Title>
+
+    <!-- Output Directory -->
+    <OutputPath>bin\Release\</OutputPath>
+
+    <!-- Enable XML Documentation for NuGet -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Dependencies (if any) -->
+    <!-- Example: <PackageReference Include="SomeLibrary" Version="1.2.3" /> -->
+  </ItemGroup>
+
+</Project>
