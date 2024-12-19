@@ -16,7 +16,7 @@ namespace ComplexityAnalyzer
             }
 
             // Check for direct array access
-            if (codeSnippet.Contains("[") && codeSnippet.Contains("]") && !codeSnippet.Contains("for") && !codeSnippet.Contains("foreach"))
+            if (IsArrayAccess(codeSnippet))
             {
                 return "O(1) - Constant Time Complexity Detected";
             }
@@ -37,6 +37,21 @@ namespace ComplexityAnalyzer
             return "Complexity Undetermined";
         }
 
+        private static bool IsArrayAccess(string codeSnippet)
+        {
+            // Check for array access pattern
+            if (codeSnippet.Contains("[") && codeSnippet.Contains("]"))
+            {
+                // Exclude array initialization patterns like "int[] array = new int[10];"
+                if (codeSnippet.Contains("new") || codeSnippet.Contains("="))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
         private static bool IsConstantValue(string value)
         {
             // Check if the value is a numeric literal or similar constant
@@ -48,19 +63,5 @@ namespace ComplexityAnalyzer
             // Check if the value is a valid character literal, e.g., 'a'
             return value.Length == 3 && value.StartsWith("'") && value.EndsWith("'");
         }
-
-        private static bool IsArrayAccess(string codeSnippet)
-        {
-            if (codeSnippet.Contains("[") && codeSnippet.Contains("]"))
-            {
-                if (codeSnippet.Contains("new") || codeSnippet.Contains("="))
-                {
-                    return false;
-                }
-                return true;
-            }
-            return false;
-        }
-
     }
 }
