@@ -28,13 +28,25 @@ namespace ComplexityAnalyzer
             }
 
             // Check for constant return statements
-            if (codeSnippet.TrimStart().StartsWith("return ") && !codeSnippet.Contains(" ") && codeSnippet.TrimEnd().EndsWith(";"))
+            if (codeSnippet.Trim().StartsWith("return ") && IsConstantValue(codeSnippet.Trim().Substring(7).TrimEnd(';')))
             {
                 return "O(1) - Constant Time Complexity Detected";
             }
 
             // If no pattern matches, return undetermined
             return "Complexity Undetermined";
+        }
+
+        private static bool IsConstantValue(string value)
+        {
+            // Check if the value is a numeric literal or similar constant
+            return int.TryParse(value, out _) || double.TryParse(value, out _) || IsCharLiteral(value);
+        }
+
+        private static bool IsCharLiteral(string value)
+        {
+            // Check if the value is a valid character literal, e.g., 'a'
+            return value.Length == 3 && value.StartsWith("'") && value.EndsWith("'");
         }
     }
 }
