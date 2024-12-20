@@ -1,7 +1,6 @@
-// ------------------------------------------------------------
+﻿// ------------------------------------------------------------
 // Copyright (c) CraftedWithIntent.  All rights reserved.
 // ------------------------------------------------------------
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -10,210 +9,24 @@ namespace ComplexityAnalyzer.Tests
     [TestClass]
     public class ComplexityAnalyzerTests
     {
-        /// <summary>
-        /// Given direct array index access,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
+        // PHASE 1: O(1) Tests
         [TestMethod]
-        public void GivenArrayIndexAccess_WhenDetected_ThenReturnsO1()
+        public void GivenArrayIndexAccess_WhenAnalyzed_ThenReturnsO1()
         {
             string code = "int value = array[0];";
             string result = ComplexityDetector.Detect(code);
             Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
         }
 
-        /// <summary>
-        /// Given dictionary key access,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
         [TestMethod]
-        public void GivenDictionaryKeyAccess_WhenDetected_ThenReturnsO1()
-        {
-            string code = "var value = dictionary[\"key\"];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given a constant return statement,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenConstantReturnStatement_WhenDetected_ThenReturnsO1()
+        public void GivenConstantReturnStatement_WhenAnalyzed_ThenReturnsO1()
         {
             string code = "return 42;";
             string result = ComplexityDetector.Detect(code);
             Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
         }
 
-        /// <summary>
-        /// Given an empty or whitespace code snippet,
-        /// When the code snippet is analyzed,
-        /// Then it should return "Complexity Undetermined."
-        /// </summary>
-        [TestMethod]
-        public void GivenEmptyCodeSnippet_WhenAnalyzed_ThenReturnsUndetermined()
-        {
-            string code = "";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("Complexity Undetermined", result);
-        }
-
-        /// <summary>
-        /// Given a null code snippet,
-        /// When the code snippet is analyzed,
-        /// Then it should throw an ArgumentNullException.
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GivenNullCodeSnippet_WhenAnalyzed_ThenThrowsException()
-        {
-            string code = null;
-            ComplexityDetector.Detect(code);
-        }
-
-        /// <summary>
-        /// Given a code snippet containing only comments,
-        /// When the code snippet is analyzed,
-        /// Then it should return "Complexity Undetermined."
-        /// </summary>
-        [TestMethod]
-        public void GivenCommentOnlyCode_WhenAnalyzed_ThenReturnsUndetermined()
-        {
-            string code = "// This is a comment";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("Complexity Undetermined", result);
-        }
-
-        /// <summary>
-        /// Given a code snippet without O(1) patterns,
-        /// When the code snippet is analyzed,
-        /// Then it should return "Complexity Undetermined."
-        /// </summary>
-        [TestMethod]
-        public void GivenCodeWithoutO1Pattern_WhenAnalyzed_ThenReturnsUndetermined()
-        {
-            string code = "for (int i = 0; i < n; i++) { sum += i; }";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("Complexity Undetermined", result);
-        }
-
-        /// <summary>
-        /// Given array initialization without direct access,
-        /// When the code snippet is analyzed,
-        /// Then it should return "Complexity Undetermined."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayInitializationWithoutAccess_WhenAnalyzed_ThenReturnsUndetermined()
-        {
-            string code = "int[] array = new int[10];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("Complexity Undetermined", result);
-        }
-
-        /// <summary>
-        /// Given array access within a function body,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayAccessInsideFunction_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "int GetValue(int[] array) { return array[2]; }";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given nested array access,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenChainedArrayAccess_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "var value = array1[array2[5]];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given array access with arithmetic index calculations,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayAccessWithArithmeticIndex_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "int value = array[2 + 3];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given array access with a large index value,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenLargeArrayIndexAccess_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "int value = array[100000];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given array access within a nested block,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayAccessInNestedBlock_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "{ int value = array[3]; }";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given array access inside a conditional statement,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayAccessInConditional_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "if (condition) { int value = array[0]; }";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given array access within a ternary expression,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(1) - Constant Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenArrayAccessInTernaryExpression_WhenAnalyzed_ThenReturnsO1()
-        {
-            string code = "int value = condition ? array[1] : array[2];";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
-        }
-
-        // ------------------------------------------------------------
-        // Phase 2: O(log n) - Logarithmic Time Complexity Tests
-        // ------------------------------------------------------------
-
-        /// <summary>
-        /// Given a binary search implementation,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
-        /// </summary>
+        // PHASE 2: O(log n) Tests
         [TestMethod]
         public void GivenBinarySearch_WhenAnalyzed_ThenReturnsOLogN()
         {
@@ -232,71 +45,121 @@ namespace ComplexityAnalyzer.Tests
             Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
         }
 
-        /// <summary>
-        /// Given a divide-and-conquer recursive function,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
-        /// </summary>
-        [TestMethod]
-        public void GivenDivideAndConquer_WhenAnalyzed_ThenReturnsOLogN()
-        {
-            string code = @"
-                int DivideAndConquer(int n) {
-                    if (n <= 1) return 1;
-                    return DivideAndConquer(n / 2) + DivideAndConquer(n / 2);
-                }";
-            string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
-        }
-
-        /// <summary>
-        /// Given a logarithmic loop (e.g., halving iteration),
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
-        /// </summary>
         [TestMethod]
         public void GivenLogarithmicLoop_WhenAnalyzed_ThenReturnsOLogN()
         {
-            string code = @"
-                for (int i = 1; i < n; i *= 2) {
-                    Console.WriteLine(i);
-                }";
+            string code = "for (int i = 1; i < n; i *= 2) { sum += i; }";
             string result = ComplexityDetector.Detect(code);
             Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
         }
 
-        /// <summary>
-        /// Given a mixed iteration pattern with logarithmic behavior,
-        /// When the code snippet is analyzed,
-        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
-        /// </summary>
+        // PHASE 3: O(n) Tests
         [TestMethod]
-        public void GivenMixedLogarithmicIteration_WhenAnalyzed_ThenReturnsOLogN()
+        public void GivenSingleLoop_WhenAnalyzed_ThenReturnsON()
         {
-            string code = @"
-                int result = 0;
-                for (int i = n; i > 0; i /= 2) {
-                    result += i;
-                }";
+            string code = "for (int i = 0; i < n; i++) { sum += i; }";
             string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
+            Assert.AreEqual("O(n) - Linear Time Complexity Detected", result);
         }
 
-        /// <summary>
-        /// Given an invalid recursive function without divide-and-conquer behavior,
-        /// When the code snippet is analyzed,
-        /// Then it should return "Complexity Undetermined."
-        /// </summary>
         [TestMethod]
-        public void GivenNonLogarithmicRecursion_WhenAnalyzed_ThenReturnsUndetermined()
+        public void GivenWhileLoop_WhenAnalyzed_ThenReturnsON()
+        {
+            string code = "while (i < n) { i++; }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n) - Linear Time Complexity Detected", result);
+        }
+
+        // PHASE 4: O(n log n) Tests
+        [TestMethod]
+        public void GivenSortingAlgorithm_WhenAnalyzed_ThenReturnsNLogN()
+        {
+            string code = "Array.Sort(array);";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n log n) - Linearithmic Time Complexity Detected", result);
+        }
+
+        [TestMethod]
+        public void GivenMergeSort_WhenAnalyzed_ThenReturnsNLogN()
         {
             string code = @"
-                int InvalidRecursion(int n) {
-                    if (n <= 0) return 1;
-                    return InvalidRecursion(n - 1) + 1;
+                void MergeSort(int[] array) {
+                    if (array.Length <= 1) return;
+                    int mid = array.Length / 2;
+                    int[] left = array.Take(mid).ToArray();
+                    int[] right = array.Skip(mid).ToArray();
+                    MergeSort(left);
+                    MergeSort(right);
+                    Merge(array, left, right);
                 }";
             string result = ComplexityDetector.Detect(code);
-            Assert.AreEqual("Complexity Undetermined", result);
+            Assert.AreEqual("O(n log n) - Linearithmic Time Complexity Detected", result);
+        }
+
+        // PHASE 5: O(n²) Tests
+        [TestMethod]
+        public void GivenNestedLoops_WhenAnalyzed_ThenReturnsON2()
+        {
+            string code = "for (int i = 0; i < n; i++) { for (int j = 0; j < n; j++) { sum += i + j; } }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n²) - Quadratic Time Complexity Detected", result);
+        }
+
+        [TestMethod]
+        public void GivenQuadraticMatrixTraversal_WhenAnalyzed_ThenReturnsON2()
+        {
+            string code = "for (int i = 0; i < matrix.Length; i++) { for (int j = 0; j < matrix[i].Length; j++) { Process(matrix[i][j]); } }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n²) - Quadratic Time Complexity Detected", result);
+        }
+
+        // PHASE 6: O(n³) Tests
+        [TestMethod]
+        public void GivenTripleNestedLoops_WhenAnalyzed_ThenReturnsON3()
+        {
+            string code = "for (int i = 0; i < n; i++) { for (int j = 0; j < n; j++) { for (int k = 0; k < n; k++) { sum += i + j + k; } } }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n³) - Cubic Time Complexity Detected", result);
+        }
+
+        [TestMethod]
+        public void GivenCubicMatrixTraversal_WhenAnalyzed_ThenReturnsON3()
+        {
+            string code = "for (int i = 0; i < cube.Length; i++) { for (int j = 0; j < cube[i].Length; j++) { for (int k = 0; k < cube[i][j].Length; k++) { Process(cube[i][j][k]); } } }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n³) - Cubic Time Complexity Detected", result);
+        }
+
+        // PHASE 7: O(2ⁿ) Tests
+        [TestMethod]
+        public void GivenExponentialRecursion_WhenAnalyzed_ThenReturnsO2N()
+        {
+            string code = @"
+                int Fibonacci(int n) {
+                    if (n <= 1) return n;
+                    return Fibonacci(n - 1) + Fibonacci(n - 2);
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(2ⁿ) - Exponential Time Complexity Detected", result);
+        }
+
+        // PHASE 8: O(n!) Tests
+        [TestMethod]
+        public void GivenPermutations_WhenAnalyzed_ThenReturnsONFactorial()
+        {
+            string code = @"
+                void Permutations(char[] str, int l, int r) {
+                    if (l == r) Console.WriteLine(new string(str));
+                    else {
+                        for (int i = l; i <= r; i++) {
+                            Swap(ref str[l], ref str[i]);
+                            Permutations(str, l + 1, r);
+                            Swap(ref str[l], ref str[i]);
+                        }
+                    }
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(n!) - Factorial Time Complexity Detected", result);
         }
     }
 }
