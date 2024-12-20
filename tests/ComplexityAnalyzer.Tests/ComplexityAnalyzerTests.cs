@@ -11,7 +11,9 @@ namespace ComplexityAnalyzer.Tests
     public class ComplexityAnalyzerTests
     {
         /// <summary>
-        /// Verifies that direct array index access is detected as O(1) complexity.
+        /// Given direct array index access,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayIndexAccess_WhenDetected_ThenReturnsO1()
@@ -22,7 +24,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that dictionary key access is detected as O(1) complexity.
+        /// Given dictionary key access,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenDictionaryKeyAccess_WhenDetected_ThenReturnsO1()
@@ -33,7 +37,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that a constant return statement is detected as O(1) complexity.
+        /// Given a constant return statement,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenConstantReturnStatement_WhenDetected_ThenReturnsO1()
@@ -44,7 +50,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Ensures that an empty or whitespace code snippet returns "Complexity Undetermined."
+        /// Given an empty or whitespace code snippet,
+        /// When the code snippet is analyzed,
+        /// Then it should return "Complexity Undetermined."
         /// </summary>
         [TestMethod]
         public void GivenEmptyCodeSnippet_WhenAnalyzed_ThenReturnsUndetermined()
@@ -55,7 +63,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Ensures that a null code snippet throws an ArgumentNullException.
+        /// Given a null code snippet,
+        /// When the code snippet is analyzed,
+        /// Then it should throw an ArgumentNullException.
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -66,7 +76,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Ensures that code snippets containing only comments return "Complexity Undetermined."
+        /// Given a code snippet containing only comments,
+        /// When the code snippet is analyzed,
+        /// Then it should return "Complexity Undetermined."
         /// </summary>
         [TestMethod]
         public void GivenCommentOnlyCode_WhenAnalyzed_ThenReturnsUndetermined()
@@ -77,7 +89,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Ensures that code snippets without O(1) patterns return "Complexity Undetermined."
+        /// Given a code snippet without O(1) patterns,
+        /// When the code snippet is analyzed,
+        /// Then it should return "Complexity Undetermined."
         /// </summary>
         [TestMethod]
         public void GivenCodeWithoutO1Pattern_WhenAnalyzed_ThenReturnsUndetermined()
@@ -88,7 +102,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Ensures that array initialization without direct access returns "Complexity Undetermined."
+        /// Given array initialization without direct access,
+        /// When the code snippet is analyzed,
+        /// Then it should return "Complexity Undetermined."
         /// </summary>
         [TestMethod]
         public void GivenArrayInitializationWithoutAccess_WhenAnalyzed_ThenReturnsUndetermined()
@@ -99,7 +115,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access within a function body is detected as O(1) complexity.
+        /// Given array access within a function body,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayAccessInsideFunction_WhenAnalyzed_ThenReturnsO1()
@@ -110,7 +128,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that nested array access is detected as O(1) complexity.
+        /// Given nested array access,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenChainedArrayAccess_WhenAnalyzed_ThenReturnsO1()
@@ -121,7 +141,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access with arithmetic index calculations is detected as O(1) complexity.
+        /// Given array access with arithmetic index calculations,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayAccessWithArithmeticIndex_WhenAnalyzed_ThenReturnsO1()
@@ -132,7 +154,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access with a large index value is detected as O(1) complexity.
+        /// Given array access with a large index value,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenLargeArrayIndexAccess_WhenAnalyzed_ThenReturnsO1()
@@ -143,7 +167,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access within a nested block is detected as O(1) complexity.
+        /// Given array access within a nested block,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayAccessInNestedBlock_WhenAnalyzed_ThenReturnsO1()
@@ -154,7 +180,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access inside a conditional statement is detected as O(1) complexity.
+        /// Given array access inside a conditional statement,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayAccessInConditional_WhenAnalyzed_ThenReturnsO1()
@@ -165,7 +193,9 @@ namespace ComplexityAnalyzer.Tests
         }
 
         /// <summary>
-        /// Verifies that array access within a ternary expression is detected as O(1) complexity.
+        /// Given array access within a ternary expression,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(1) - Constant Time Complexity Detected."
         /// </summary>
         [TestMethod]
         public void GivenArrayAccessInTernaryExpression_WhenAnalyzed_ThenReturnsO1()
