@@ -204,5 +204,99 @@ namespace ComplexityAnalyzer.Tests
             string result = ComplexityDetector.Detect(code);
             Assert.AreEqual("O(1) - Constant Time Complexity Detected", result);
         }
+
+        // ------------------------------------------------------------
+        // Phase 2: O(log n) - Logarithmic Time Complexity Tests
+        // ------------------------------------------------------------
+
+        /// <summary>
+        /// Given a binary search implementation,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
+        /// </summary>
+        [TestMethod]
+        public void GivenBinarySearch_WhenAnalyzed_ThenReturnsOLogN()
+        {
+            string code = @"
+                int BinarySearch(int[] arr, int target) {
+                    int low = 0, high = arr.Length - 1;
+                    while (low <= high) {
+                        int mid = low + (high - low) / 2;
+                        if (arr[mid] == target) return mid;
+                        if (arr[mid] < target) low = mid + 1;
+                        else high = mid - 1;
+                    }
+                    return -1;
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
+        }
+
+        /// <summary>
+        /// Given a divide-and-conquer recursive function,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
+        /// </summary>
+        [TestMethod]
+        public void GivenDivideAndConquer_WhenAnalyzed_ThenReturnsOLogN()
+        {
+            string code = @"
+                int DivideAndConquer(int n) {
+                    if (n <= 1) return 1;
+                    return DivideAndConquer(n / 2) + DivideAndConquer(n / 2);
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
+        }
+
+        /// <summary>
+        /// Given a logarithmic loop (e.g., halving iteration),
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
+        /// </summary>
+        [TestMethod]
+        public void GivenLogarithmicLoop_WhenAnalyzed_ThenReturnsOLogN()
+        {
+            string code = @"
+                for (int i = 1; i < n; i *= 2) {
+                    Console.WriteLine(i);
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
+        }
+
+        /// <summary>
+        /// Given a mixed iteration pattern with logarithmic behavior,
+        /// When the code snippet is analyzed,
+        /// Then it should return "O(log n) - Logarithmic Time Complexity Detected."
+        /// </summary>
+        [TestMethod]
+        public void GivenMixedLogarithmicIteration_WhenAnalyzed_ThenReturnsOLogN()
+        {
+            string code = @"
+                int result = 0;
+                for (int i = n; i > 0; i /= 2) {
+                    result += i;
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("O(log n) - Logarithmic Time Complexity Detected", result);
+        }
+
+        /// <summary>
+        /// Given an invalid recursive function without divide-and-conquer behavior,
+        /// When the code snippet is analyzed,
+        /// Then it should return "Complexity Undetermined."
+        /// </summary>
+        [TestMethod]
+        public void GivenNonLogarithmicRecursion_WhenAnalyzed_ThenReturnsUndetermined()
+        {
+            string code = @"
+                int InvalidRecursion(int n) {
+                    if (n <= 0) return 1;
+                    return InvalidRecursion(n - 1) + 1;
+                }";
+            string result = ComplexityDetector.Detect(code);
+            Assert.AreEqual("Complexity Undetermined", result);
+        }
     }
 }

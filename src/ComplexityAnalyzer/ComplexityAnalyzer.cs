@@ -1,5 +1,5 @@
-// ------------------------------------------------------------
-// Copyright (c) CraftedwithIntent.  All rights reserved.
+﻿// ------------------------------------------------------------
+// Copyright (c) CraftedWithIntent.  All rights reserved.
 // ------------------------------------------------------------
 using System;
 
@@ -11,96 +11,122 @@ namespace ComplexityAnalyzer
         {
             if (codeSnippet == null)
             {
-                // Throw exception for null input as expected
                 throw new ArgumentNullException(nameof(codeSnippet), "Code snippet cannot be null.");
             }
 
             if (string.IsNullOrWhiteSpace(codeSnippet))
             {
-                // Handle empty or whitespace input
                 return "Complexity Undetermined";
             }
 
-            // Check for direct array access
-            if (IsDirectArrayAccess(codeSnippet))
+            // Normalize code snippet for consistent analysis
+            string normalizedCode = NormalizeCode(codeSnippet);
+
+
+            if (IsBinarySearchPattern(normalizedCode) || IsLogarithmicLoop(normalizedCode) || IsDivideAndConquerPattern(normalizedCode))
+            {
+                return "O(log n) - Logarithmic Time Complexity Detected";
+            }
+
+            // Check for O(1) complexity
+            if (IsDirectArrayAccess(normalizedCode) || IsConstantReturnStatement(normalizedCode))
             {
                 return "O(1) - Constant Time Complexity Detected";
             }
 
-            // Check for dictionary key access
-            if (codeSnippet.Contains("dictionary["))
-            {
-                return "O(1) - Constant Time Complexity Detected";
-            }
-
-            // Check for constant return statements
-            if (IsConstantReturnStatement(codeSnippet))
-            {
-                return "O(1) - Constant Time Complexity Detected";
-            }
-
-            // If no pattern matches, return undetermined
+            // Default case
             return "Complexity Undetermined";
         }
 
         private static bool IsDirectArrayAccess(string codeSnippet)
         {
-            // Normalize the code snippet (remove line breaks, extra spaces)
-            string normalizedCode = codeSnippet.Replace("\n", "").Replace("\r", "").Trim();
-
-            // Match patterns that indicate array access
-            if (normalizedCode.Contains("[") && normalizedCode.Contains("]"))
-            {
-                // Exclude array initializations like "int[] array = new int[10];"
-                if (normalizedCode.Contains("new")) return false;
-
-                // Check for array access inside conditionals or blocks
-                if (normalizedCode.Contains("if (") || normalizedCode.Contains("{") || normalizedCode.Contains("}"))
-                {
-                    string innerCode = ExtractInnerBlock(normalizedCode);
-                    return IsDirectArrayAccess(innerCode);
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private static string ExtractInnerBlock(string codeSnippet)
-        {
-            // Extract the inner block of a conditional or nested structure
-            int openBraceIndex = codeSnippet.IndexOf("{");
-            int closeBraceIndex = codeSnippet.LastIndexOf("}");
-            if (openBraceIndex != -1 && closeBraceIndex != -1)
-            {
-                return codeSnippet.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1).Trim();
-            }
-            return codeSnippet;
+            return codeSnippet.Contains("[") && codeSnippet.Contains("]") && !codeSnippet.Contains("new");
         }
 
         private static bool IsConstantReturnStatement(string codeSnippet)
         {
-            // Check if the snippet starts with 'return', contains a constant, and ends with a semicolon
-            if (codeSnippet.TrimStart().StartsWith("return ") && codeSnippet.TrimEnd().EndsWith(";"))
-            {
-                string value = codeSnippet.Trim().Substring(7).TrimEnd(';');
-                return IsConstantValue(value);
-            }
-
-            return false;
+            return codeSnippet.StartsWith("return") && codeSnippet.EndsWith(";") && IsConstantValue(codeSnippet.Substring(7).TrimEnd(';'));
         }
 
         private static bool IsConstantValue(string value)
         {
-            // Check if the value is numeric or a character literal
-            return int.TryParse(value, out _) || double.TryParse(value, out _) || IsCharLiteral(value);
+            return int.TryParse(value, out _) || double.TryParse(value, out _);
         }
 
-        private static bool IsCharLiteral(string value)
+        // Helper methods
+        private static bool IsBinarySearchPattern(string codeSnippet)
         {
-            // Check for valid character literals like 'a'
-            return value.Length == 3 && value.StartsWith("'") && value.EndsWith("'");
+            // Simplified detection for binary search pattern
+            return codeSnippet.Contains("while") &&
+                   codeSnippet.Contains("low") &&
+                   codeSnippet.Contains("high") &&
+                   codeSnippet.Contains("mid") &&
+                   codeSnippet.Contains("/") &&
+                   codeSnippet.Contains("<=") &&
+                   codeSnippet.Contains("return");
+        }
+
+        private static bool IsLogarithmicLoop(string codeSnippet)
+        {
+            // Check for loop patterns with exponential growth or halving logic
+            return codeSnippet.Contains("for") &&
+                   codeSnippet.Contains(";") &&
+                   (codeSnippet.Contains("i *= 2") || codeSnippet.Contains("i /= 2"));
+        }
+
+        private static string NormalizeCode(string codeSnippet)
+        {
+            // Simplify code for easier detection (remove whitespace, comments, etc.)
+            return codeSnippet.Replace("\n", "").Replace("\r", "").Trim();
+        }
+
+        private static bool IsLogarithmicRecursion(string codeSnippet)
+        {
+            return codeSnippet.Contains("n/2") && codeSnippet.Contains("return");
+        }
+
+        private static bool IsLinearLoop(string codeSnippet)
+        {
+            return codeSnippet.Contains("for(") && codeSnippet.Contains("i++");
+        }
+
+        private static bool IsDivideAndConquerPattern(string codeSnippet)
+        {
+            // Simplified detection for recursive divide-and-conquer methods
+            return codeSnippet.Contains("return") &&
+                   codeSnippet.Contains("(") &&
+                   codeSnippet.Contains(")") &&
+                   (codeSnippet.Contains("n / 2") || codeSnippet.Contains("n >> 1")) &&
+                   codeSnippet.Contains("if") &&
+                   codeSnippet.Contains("else");
+        }
+
+        private static bool IsSortingPattern(string codeSnippet)
+        {
+            return codeSnippet.Contains("Array.Sort") || codeSnippet.Contains("List.Sort");
+        }
+
+        private static bool IsNestedLoop(string codeSnippet, int nestingLevel)
+        {
+            int loopCount = 0;
+            foreach (var token in codeSnippet.Split('('))
+            {
+                if (token.Contains("for") || token.Contains("while"))
+                {
+                    loopCount++;
+                }
+            }
+            return loopCount >= nestingLevel;
+        }
+
+        private static bool IsExponentialRecursion(string codeSnippet)
+        {
+            return codeSnippet.Contains("f(n-1)") && codeSnippet.Contains("f(n-2)");
+        }
+
+        private static bool IsFactorialPattern(string codeSnippet)
+        {
+            return codeSnippet.Contains("Permutations") || codeSnippet.Contains("factorial");
         }
     }
 }
